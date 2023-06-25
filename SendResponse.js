@@ -3,6 +3,7 @@ module.exports.Success = (res) => {
 }
 
 module.exports.Error = (res, errorMessage) => {
+    res.status(500)
     res.send({
         ErrorMessage: errorMessage
     })
