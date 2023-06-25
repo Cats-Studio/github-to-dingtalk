@@ -25,7 +25,7 @@ module.exports = function SendMarkdown(title, message, res) {
         }
     }
 
-    var option = {
+    let option = {
         url: url,
         method: "POST",
         headers: {
@@ -49,7 +49,7 @@ module.exports = function SendMarkdown(title, message, res) {
             })
             return;
         }
-        var resData = JSON.parse(body)
+        let resData = JSON.parse(body)
         if (resData.errcode != 0) {
             respond.Error(res, {
                 ErrorType: "dingtalk bot error",
