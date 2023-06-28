@@ -1,11 +1,12 @@
 const request = require("request")
+const crypto = require('crypto');
+const querystring = require("querystring")
+
 const respond = require("./SendResponse")
 const config = require("./conf.json")
 
 const url = config.url;
 const secret = config.secret;
-
-// 暂时没有使用加签进行安全验证
 
 module.exports = function SendMarkdown(title, message, res) {
     if (url == null || secret == null
@@ -17,6 +18,23 @@ module.exports = function SendMarkdown(title, message, res) {
         return;
     }
 
+    // 使用加签进行安全验证
+    // 官方文档：https://open.dingtalk.com/document/orgapp/customize-robot-security-settings
+
+    let timestamp = Date.now()
+
+    const signString = timestamp + "\n" + secret;
+    const hmac = crypto.createHmac('sha256', secret);
+    hmac.update(signString, 'utf8');
+    const signature = hmac.digest();
+    const sign = Buffer.from(signature).toString('base64');
+
+    let url_data = {
+        timestamp: timestamp,
+        sign: sign
+    }
+    let query_url = url + "&" + querystring.stringify(url_data)
+
     var msg = {
         msgtype: "markdown",
         markdown: {
@@ -26,7 +44,7 @@ module.exports = function SendMarkdown(title, message, res) {
     }
 
     let option = {
-        url: url,
+        url: query_url,
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
