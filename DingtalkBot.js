@@ -35,7 +35,7 @@ module.exports = function SendMarkdown(title, message, res) {
     }
     let query_url = url + "&" + querystring.stringify(url_data)
 
-    var msg = {
+    let msg = {
         msgtype: "markdown",
         markdown: {
             title: title,
