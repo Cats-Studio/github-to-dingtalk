@@ -1,5 +1,5 @@
 const Actions = {
-    push: require('./actions/push')
+    push: require('./events/push')
 }
 
 module.exports = (headers, body) => {
