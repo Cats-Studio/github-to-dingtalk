@@ -1,6 +1,7 @@
 const request = require("request")
 const respond = require("./SendResponse")
 const config = require("./conf.json")
+const crypto = require('crypto');
 
 const url = config.url;
 const secret = config.secret;
@@ -8,6 +9,9 @@ const secret = config.secret;
 // 暂时没有使用加签进行安全验证
 
 module.exports = function SendMarkdown(title, message, res) {
+    let timestamp=new Date().getTime()
+    let re = crypto.createHmac("sha256",secret).update(timestamp+"\n"+secret).digest('base64')
+    url = `$&{url}timestamp=${timestamp}&sign=${re}`
     if (url == null || secret == null
         || url.length == 0 || secret.length == 0) {
         respond.Error(res, {
