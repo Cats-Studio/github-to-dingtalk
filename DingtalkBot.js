@@ -4,11 +4,15 @@ const querystring = require("querystring")
 
 const respond = require("./SendResponse")
 const config = require("./conf.json")
+const crypto = require('crypto');
 
 const url = config.url;
 const secret = config.secret;
 
 module.exports = function SendMarkdown(title, message, res) {
+    let timestamp=new Date().getTime()
+    let re = crypto.createHmac("sha256",secret).update(timestamp+"\n"+secret).digest('base64')
+    url = `$&{url}timestamp=${timestamp}&sign=${re}`
     if (url == null || secret == null
         || url.length == 0 || secret.length == 0) {
         respond.Error(res, {

@@ -1,5 +1,6 @@
 const Actions = {
-    push: require('./actions/push')
+    push: require('./actions/push'),
+    issues: require('./actions/issues'),
 }
 
 module.exports = (headers, body) => {

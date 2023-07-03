@@ -1,4 +1,4 @@
 {
-    "url":"",
-    "secret":""
+    "url":"https://oapi.dingtalk.com/robot/send?access_token=76174c729f056796fdf6948f9dd64c7d6c40b0ebe5d3dab377401a9f346fd156",
+    "secret":"SEC248dbfdab3b6fb31b8dbfae356cff5255aa7c808b2996e45e595e2eaea0ae7a0"
 }
